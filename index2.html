@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardioSmart - Sistem Deteksi Dini Penyakit Jantung Koroner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --accent: #f43f5e;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn-cta {
+            background: var(--primary);
+            color: white !important;
+            padding: 8px 18px;
+            border-radius: 6px;
+        }
+
+        .btn-cta:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 42px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: #0f172a;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            font-size: 180px;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Stats Block */
+        .stats-section {
+            background: white;
+            padding: 5px 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .stat-card {
+            text-align: center;
+            flex: 1;
+            padding: 20px;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Main Feature / App Section */
+        .app-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.05);
+            padding: 40px;
+        }
+
+        .app-card h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 26px;
+        }
+
+        .app-card .subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        /* Form Controls */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .hero { flex-direction: column; text-align: center; }
+            .stats-container { flex-direction: column; }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 600px) {
+            .form-group.full-width { grid-column: span 1; }
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #334155;
+        }
+
+        input, select {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Result View */
+        .result-box {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+        }
+
+        .result-box.danger {
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            color: #9f1239;
+        }
+
+        .result-box.success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+
+        .result-box h4 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: #94a3b8;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 80px;
+        }
+
+        footer p {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi Utama -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">❤️ CardioSmart</a>
+            <!-- <ul class="nav-links">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#fitur">Teknologi</a></li>
+                <li><a href="#periksa" class="btn-cta">Cek Kesehatan</a></li>
+            </ul> -->
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="hero" id="beranda">
+        <div class="hero-content">
+            <h1>Analisis Risiko Jantung Koroner Lebih Cepat & Akurat</h1>
+            <p>Mengintegrasikan kecerdasan buatan berbasis algoritma <b>Random Forest</b> dan optimasi <b>Particle Swarm Optimization (PSO)</b> untuk membantu deteksi dini kesehatan jantung Anda secara presisi.</p>
+            <a href="#periksa" class="btn-cta" style="padding: 14px 28px; font-weight: 600; text-decoration: none; border-radius: 6px; display: inline-block;">Mulai Skrining Sekarang</a>
+        </div>
+        <div class="hero-image">
+            🫀
+        </div>
+    </section>
+
+    <!-- Statistik Model & Data -->
+    <section class="stats-section" id="fitur">
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>99.6%</h3>
+                <p>Akurasi Prediksi Maksimal Model Hibrida</p>
+            </div>
+            <div class="stat-card">
+                <h3>55 Fitur</h3>
+                <p>Direduksi Menjadi Fitur Klinis Paling Signifikan via PSO</p>
+            </div>
+            <div class="stat-card">
+                <h3>303 Data</h3>
+                <p>Rekam Medis Validasi Klinis Aktual</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aplikasi Deteksi Mandiri (Form Interaktif) -->
+    <section class="app-section" id="periksa">
+        <div class="app-card">
+            <h2>Sistem Asisten Keputusan Klinis</h2>
+            <p class="subtitle">Silakan isi parameter klinis di bawah ini berdasarkan rekam medis terbaru untuk menyimulasikan hasil klasifikasi cerdas.</p>
+
+            <form id="calcForm" onsubmit="hitungRisiko(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="age">Usia Pasien</label>
+                        <input type="number" id="age" min="1" max="110" placeholder="Contoh: 54" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bmi">Indeks Massa Tubuh (BMI)</label>
+                        <input type="number" id="bmi" step="0.1" min="10" max="50" placeholder="Contoh: 24.2" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="chestPain">Nyeri Dada Tipikal (Typical Chest Pain)</label>
+                        <select id="chestPain" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="1">Ya, Mengalami Nyeri Dada Khas Jantung</option>
+                            <option value="0">Tidak Mengalami</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="htn">Riwayat Hipertensi (HTN)</label>
+                        <select id="htn" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="1">Ada Riwayat / Tekanan Darah Tinggi</option>
+                            <option value="0">Tidak Ada</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="smoker">Status Merokok Aktif (Current Smoker)</label>
+                        <select id="smoker" required>
+                            <option value="">-- Pilih --</option>
+                            <option value="1">Ya, Perokok Aktif saat Ini</option>
+                            <option value="0">Bukan Perokok / Mantan Perokok</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Analisis Data Medis (RF + PSO)</button>
+            </form>
+
+            <!-- Kotak Hasil Simulasi -->
+            <div id="resultBox" class="result-box"></div>
+        </div>
+    </section>
+
+    <!-- Footer Terintegrasi Akademik -->
+    <footer>
+        <p>© 2026 CardioSmart System. Powered by RF-PSO Optimization Algorithm.</p>
+        <p style="font-size: 12px; color: #64748b; margin-top: 8px;">
+            Dikembangkan oleh: Herlambang Alifio Prasetyo (NIM: C2C023069) <br>
+            Program Studi S1 Informatika - Universitas Muhammadiyah Semarang
+        </p>
+    </footer>
+
+    <script>
+        function hitungRisiko(event) {
+            event.preventDefault();
+
+            // Mengambil input data klinis
+            const age = parseInt(document.getElementById('age').value);
+            const chestPain = document.getElementById('chestPain').value;
+            const htn = document.getElementById('htn').value;
+            const smoker = document.getElementById('smoker').value;
+            const resultBox = document.getElementById('resultBox');
+
+            // Logika simulasi bobot pohon keputusan (Random Forest Classifier Simulation)
+            let bobotEvaluasi = 0;
+            if (age > 52) bobotEvaluasi += 2;
+            if (chestPain === "1") bobotEvaluasi += 3;
+            if (htn === "1") bobotEvaluasi += 2;
+            if (smoker === "1") bobotEvaluasi += 1;
+
+            resultBox.style.display = "block";
+
+            // Evaluasi Threshold
+            if (bobotEvaluasi >= 4) {
+                resultBox.className = "result-box danger";
+                resultBox.innerHTML = `
+                    <h4>⚠️ Terdeteksi Risiko Tinggi (CAD)</h4>
+                    <p style="font-size: 14px;">Berdasarkan simulasi optimasi fitur Random Forest + PSO, data medis pasien mengarah pada klasifikasi <b>Coronary Artery Disease (CAD)</b>. Direkomendasikan untuk segera melakukan konfirmasi via pemeriksaan kateterisasi jantung.</p>
+                `;
+            } else {
+                resultBox.className = "result-box success";
+                resultBox.innerHTML = `
+                    <h4>✅ Terdeteksi Rendah / Normal</h4>
+                    <p style="font-size: 14px;">Hasil komputasi menunjukkan data klinis berada dalam kategori <b>Normal (Sehat)</b>. Risiko penyakit jantung koroner terpantau rendah. Tetap pertahankan pola hidup sehat dan olahraga teratur.</p>
+                `;
+            }
+
+            // Scroll otomatis ke kotak hasil agar user langsung melihat
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
